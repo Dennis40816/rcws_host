@@ -166,7 +166,7 @@ Located at `test/usb_test/src/rcws_host`
 ## RCWS CLI Commands
 
 |    Command     | Alias Char | Description                                                                                            |
-| :------------: | :--------: | :----------------------------------------------------------------------------------------------------- |
+| :------------: | :--------: | ------------------------------------------------------------------------------------------------------ |
 |     `Open`     |    `o`     | Open the serial connection and establish connection with RCWS                                          |
 |     `Init`     |    `i`     | Send an initialization string to RCWS to set it to a controllable state                                |
 |    `Close`     |    `c`     | Close the RCWS serial connection if the connection is already established                              |
@@ -190,9 +190,21 @@ The LRA has a dead zone, so when adjusting the duty cycle, it is recommended to 
 
 ![dead_zone](pictures/lra_dead_zone.png)
 
-## Data Format
+## RCWS Message
 
-**acc**
+RCWS is transmitted over USB as an RCWS Message, which consists of several fields:
+
+- **Header**
+  - **Cmd_Type**: indicates the command type of the message. The OUT bit within this field specifies whether the message is sent by the USB Host (rcws_host) or by the rcws module.
+  - **Data_Len**: the length of the data (excluding the header).
+- **Data Content**: the actual data.
+- **EOP**: end of packet.
+
+![rcws message](pictures/rcws_message.png)
+
+## RCWS Data Format
+
+**Accelerometer Data**
 
 This file stores data measured by the ADXL355 accelerometer at 4000 Hz. An example of the content is as follows:
 

@@ -8,7 +8,7 @@
       "name": "usb_test_onWSL",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/bin/lra_usb_util_test_v1.1",
+      "program": "${workspaceFolder}/build/bin/rcws_host",
       "MIMode": "gdb",
       "args": [],
       "stopAtEntry": false,

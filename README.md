@@ -139,3 +139,6 @@ cmake .. && make
 ## Which bin you should run
 
 ./build/bin/lra_usb_util_test_v1.1
+
+## Video
+https://youtu.be/ZvQ0uNaxThk

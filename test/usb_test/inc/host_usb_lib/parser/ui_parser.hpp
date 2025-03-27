@@ -4,7 +4,7 @@
  * Author: Dennis Liu
  * Contact: <liusx880630@gmail.com>
  *
- * Last Modified: Thursday August 24th 2023 12:01:36 pm
+ * Last Modified: Thursday March 27th 2025 11:00:49 am
  *
  * Copyright (c) 2023 None
  *
@@ -205,9 +205,10 @@ class UIParser {
                 /* create pipe line for python real time plot */
                 do {
                   /*  */
-                  if (!realtime_plot::isRunningInWSL()) {
+                  if (!realtime_plot::isRunningInWSL() ||
+                      realtime_plot::isRunningInWSL()) {
                     Log(fg(fmt::terminal_color::bright_blue),
-                        "Not running in WSL, python script is disabled!\n");
+                        "Python realtime plot script is disabled!\n");
                     break;
                   }
 
@@ -299,11 +300,12 @@ class UIParser {
                     }
 
                     /* exe here, never return if exec ok */
-                    /* XXX: enable this if you want to see python script running */
+                    /* XXX: enable this if you want to see python script running
+                     */
 
                     // execl("/bin/bash", "bash", "-c", exe_python.c_str(),
                     //       (char*)NULL);
-                    break; // disable this if exe_python exec
+                    break;  // disable this if exe_python exec
 
                     /* if fail */
                     dup2(original_stdout, STDOUT_FILENO);

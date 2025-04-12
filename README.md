@@ -9,10 +9,41 @@ rcws_host interacts with [rcws_stm32_firmware](https://github.com/Dennis40816/rc
 - [BS thread-pool](https://github.com/bshoshany/thread-pool)
 - [spdlog](https://github.com/gabime/spdlog)
 - [asio](https://github.com/chriskohlhoff/asio.git)
-- [jsnocpp](https://github.com/open-source-parsers/jsoncpp.git)
+- [jsoncpp](https://github.com/open-source-parsers/jsoncpp.git)
 - [websocketpp](https://github.com/zaphoyd/websocketpp.git)
 
+## Folder Description
+
+**rcws_host Main Program Location**  
+Located at `test/usb_test/src/rcws_host`
+
+**data**
+
+- Automatically generated on the first run of `rcws_host`
+- Stores accelerometer data and PWM command logs; see [Data Format](#data-format) for details.
+
+**src**
+
+- Used for controlling the RCWS in the Raspberry Pi version, now **deprecated**.
+
+**test**
+
+- Used for testing basic functionalities of RCWS such as USB communication.
+- The latest version of the `rcws_host` main program is also located here.
+
+**third_party**
+
+- Contains third-party libraries.
+
 ## Build
+
+### Clone
+
+```bash
+# git clone to local
+git clone --recurse-submodules -j8 https://github.com/Dennis40816/rcws_host.git
+cd rcws_host
+```
 
 ### Environment Prerequisites
 
@@ -36,9 +67,11 @@ sudo apt install g++-10
 sudo apt-get install libfftw3-dev
 sudo apt install libserial-dev
 
-### optional
+### usb-lib
 sudo apt-get install libudev-dev
 sudo apt-get install libusb-1.0-0-dev
+
+### optional
 sudo apt-get install libboost-all-dev
 ```
 
@@ -120,10 +153,6 @@ Once the connection is successful, start the executable and press `o` — this s
 ### Compile
 
 ```bash
-# git clone to local
-git clone --recurse-submodules -j8 https://github.com/Dennis40816/rcws_host.git
-cd rcws_host
-
 # build
 mkdir build && cd build
 cmake ..
@@ -139,29 +168,6 @@ make
 [Watch on YouTube](https://youtu.be/ZvQ0uNaxThk)
 
 [![Compile and execute](https://img.youtube.com/vi/ZvQ0uNaxThk/maxresdefault.jpg)](https://youtu.be/ZvQ0uNaxThk)
-
-## Folder Description
-
-**rcws_host Main Program Location**  
-Located at `test/usb_test/src/rcws_host`
-
-**data**
-
-- Automatically generated on the first run of `rcws_host`
-- Stores accelerometer data and PWM command logs; see [Data Format](#data-format) for details.
-
-**src**
-
-- Used for controlling the RCWS in the Raspberry Pi version, now **deprecated**.
-
-**test**
-
-- Used for testing basic functionalities of RCWS such as USB communication.
-- The latest version of the `rcws_host` main program is also located here.
-
-**third_party**
-
-- Contains third-party libraries.
 
 ## RCWS CLI Commands
 

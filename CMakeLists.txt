@@ -73,7 +73,8 @@ message("CMAKE_BINARY_DIR = ${CMAKE_BINARY_DIR}")
 set(SRC_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/src)
 set(THIRD_PARTY_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/third_party)
 # This include path is for test code that not want to link lib spdlog or lra_log_util
-set(SPDLOG_MACRO_OVERLAY_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/third_party/spdlog/include) 
+set(SPDLOG_MACRO_OVERLAY_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/third_party/spdlog/include)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # build info 
 set(CMAKE_VERBOSE_MAKEFILE TRUE)

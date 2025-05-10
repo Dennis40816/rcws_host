@@ -1,0 +1,16 @@
+# .clang-uml.yml
+compilation_database_dir: build
+output_directory: diagrams
+
+diagrams:
+  rcwshost:
+    type: class
+    title: RCWS Host 類別圖
+    glob:
+      - /home/dennis/develop/rcws_host/test/usb_test/src/rcws_host/rcws_host.cc
+    exclude:
+      namespaces:
+        - spdlog
+        - std
+        - fmt
+        - io

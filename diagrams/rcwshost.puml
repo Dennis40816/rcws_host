@@ -1,0 +1,471 @@
+@startuml
+title RCWS Host 類別圖
+enum "lra::usb_lib::RCWS_PWM_CMD_MODE" as C_0005720989269288761953
+enum C_0005720989269288761953 {
+RCWS_PWM_MANUAL_MODE
+RCWS_PWM_FILE_MODE
+}
+class "lra::usb_lib::FuncInfo<ReturnType,Args...>" as C_0016677692846105229533
+class C_0016677692846105229533 {
++FuncInfo(std::function<ReturnType (Args...)> f, Args... args) : void
+..
++call<CallArgs...>(CallArgs... args) : ReturnType
+-call<std::size_t... Is>(std::index_sequence<Is...>, std::tuple<Args...> & args_tuple) : ReturnType
+__
++default_args : std::tuple<Args...>
++func : std::function<ReturnType (Args...)>
+}
+class "lra::usb_lib::Command<FuncInfo>" as C_0010091554601981940782
+class C_0010091554601981940782 {
++Command(const std::string & name, const std::string & description, uint8_t required_mode, FuncInfo && func_info) : void
++Command(const std::string & name, const std::string & description, FuncInfo && func_info) : void
+..
++Execute() : auto
++Execute<Args...>(Args... args) : auto
++get_description() const : const std::string &
++get_mode() const : const uint8_t
++get_name() const : const std::string &
+__
+-description_ : std::string
+-func_info_ : FuncInfo
+-mode_ : uint8_t
+-name_ : std::string
+}
+class "lra::usb_lib::(anonymous_6384285)" as C_0009979760369821962475
+class C_0009979760369821962475 {
+__
++busnum : std::string
++desc : std::string
++devnum : std::string
++manufacturer : std::string
++path : std::string
++pid : std::string
++serialnum : std::string
++vid : std::string
+}
+class "lra::usb_lib::(anonymous_6384797)" as C_0016640966111775999252
+class C_0016640966111775999252 {
+__
++amp : float
++freq : float
+}
+class "lra::usb_lib::(anonymous_6384893)" as C_0012202508834059990777
+class C_0012202508834059990777 {
+__
++x : lra::usb_lib::PwmInfo
++y : lra::usb_lib::PwmInfo
++z : lra::usb_lib::PwmInfo
+}
+class "lra::usb_lib::(anonymous_6385005)" as C_0000579566535999078787
+class C_0000579566535999078787 {
+__
++info : lra::usb_lib::RcwsPwmInfo
++t_ms : float
+}
+class "lra::usb_lib::variant_cat_s<std::variant<As...>,std::variant<Bs...>,Rest...>" as C_0003858207505700472157
+class C_0003858207505700472157 {
+__
+}
+class "lra::usb_lib::variant_cat_s<std::variant<As...>,std::variant<Bs...>>" as C_0004465371694676925409
+class C_0004465371694676925409 {
+__
+}
+class "lra::usb_lib::RcwsParser" as C_0013995004851916376286
+class C_0013995004851916376286 {
++Parse(const std::vector<uint8_t> & msg) : void
++ParsePwmInData(const uint8_t * pdata, lra::usb_lib::RcwsPwmInfo * info, float * sys_time) : void
++RegisterDevice(lra::usb_lib::Rcws * prcws) : void
+__
+-prcws_ : lra::usb_lib::Rcws *
+}
+class "lra::usb_lib::RcwsMsgGenerator" as C_0006117966071706626955
+class C_0006117966071706626955 {
++Generate(LRA_USB_OUT_Cmd_t type, uint8_t * data, uint16_t length) : std::vector<uint8_t>
++Generate(LRA_USB_OUT_Cmd_t type, uint8_t data) : std::vector<uint8_t>
++Generate(LRA_USB_OUT_Cmd_t type) : std::vector<uint8_t>
++Generate(LRA_USB_OUT_Cmd_t type, std::vector<uint8_t> data) : std::vector<uint8_t>
++MoveGenerate(uint8_t type, std::vector<uint8_t> && data) : std::vector<uint8_t>
+__
+}
+class "lra::usb_lib::RCWS_IO_Exception" as C_0007508463174790856758
+class C_0007508463174790856758 {
++RCWS_IO_Exception(const std::string & message) : void
+..
++what() const noexcept : const char *
+__
+-errorMessage : std::string
+}
+class "lra::usb_lib::FuncInfo<void>" as C_0015773613878884244586
+class C_0015773613878884244586 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<void>>" as C_0015449411201283289251
+class C_0015449411201283289251 {
+__
+}
+class "lra::usb_lib::FuncInfo<void,int>" as C_0000705493911126138107
+class C_0000705493911126138107 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<void,int>>" as C_0007162988677578574206
+class C_0007162988677578574206 {
+__
+}
+class "lra::usb_lib::FuncInfo<void,std::vector<lra::usb_lib::RcwsInfo>>" as C_0013803550029792824583
+class C_0013803550029792824583 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<void,std::vector<lra::usb_lib::RcwsInfo>>>" as C_0001569929850764623214
+class C_0001569929850764623214 {
+__
+}
+class "lra::usb_lib::FuncInfo<void,LRA_Device_Index_t>" as C_0003123345807010051940
+class C_0003123345807010051940 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<void,LRA_Device_Index_t>>" as C_0003832572587521561431
+class C_0003832572587521561431 {
+__
+}
+class "lra::usb_lib::FuncInfo<void,LRA_USB_Mode_t>" as C_0002671081740145556922
+class C_0002671081740145556922 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<void,LRA_USB_Mode_t>>" as C_0001590531136156070645
+class C_0001590531136156070645 {
+__
+}
+class "lra::usb_lib::FuncInfo<bool>" as C_0009824911775259007872
+class C_0009824911775259007872 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<bool>>" as C_0000014120254699272268
+class C_0000014120254699272268 {
+__
+}
+class "lra::usb_lib::FuncInfo<int,int,int>" as C_0017343476662692487455
+class C_0017343476662692487455 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<int,int,int>>" as C_0003619412466671796319
+class C_0003619412466671796319 {
+__
+}
+class "lra::usb_lib::FuncInfo<std::vector<lra::usb_lib::RcwsInfo>>" as C_0002200629205487705327
+class C_0002200629205487705327 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<std::vector<lra::usb_lib::RcwsInfo>>>" as C_0010611589610574450831
+class C_0010611589610574450831 {
+__
+}
+class "lra::usb_lib::FuncInfo<lra::usb_lib::RcwsInfo,std::vector<lra::usb_lib::RcwsInfo>,int>" as C_0005407673863743930238
+class C_0005407673863743930238 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<lra::usb_lib::RcwsInfo,std::vector<lra::usb_lib::RcwsInfo>,int>>" as C_0017589846451525989059
+class C_0017589846451525989059 {
+__
+}
+class "lra::usb_lib::FuncInfo<lra::usb_lib::RcwsInfo,std::vector<lra::usb_lib::RcwsInfo>,size_t>" as C_0016146086392293076384
+class C_0016146086392293076384 {
+__
+}
+class "lra::usb_lib::Command<lra::usb_lib::FuncInfo<lra::usb_lib::RcwsInfo,std::vector<lra::usb_lib::RcwsInfo>,size_t>>" as C_0013425014194362657281
+class C_0013425014194362657281 {
+__
+}
+class "lra::usb_lib::Rcws" as C_0010607425340147141647
+class C_0010607425340147141647 {
++Rcws() : void
++~Rcws() : void
+..
++ChooseRcws(std::vector<RcwsInfo> info, size_t index) : lra::usb_lib::RcwsInfo
++CleanPwmCmdQueue() : void
++Close() : bool
++DevInit() : void
++DevPwmCmd(const lra::usb_lib::RcwsPwmInfo & info) : void
++DevReset(LRA_Device_Index_t dev_index) : void
++DevSend(LRA_USB_OUT_Cmd_t cmd_type, std::vector<uint8_t> data) : void
++DevSwitchMode(LRA_USB_Mode_t mode) : void
++FindAllRcws() : std::vector<RcwsInfo>
++GetAccFileHandle() : FILE *
++GetAccFileName() : std::string
+-GetDevDescriptor(const char * pbusnum, const char * pdevnum) : std::string
++GetLibSerialFd() : int
++GetNextFileName(const std::string & path, const std::string & baseName) : std::string
++GetPwmFileHandle() : FILE *
++GetPwmFileName() : std::string
++GetRcwsInfo() : lra::usb_lib::RcwsInfo
++Open() : bool
+-ParseTask() : void
++PrintAllRcwsInfo(std::vector<RcwsInfo> infos) : void
+-PrintRcwsInfo(lra::usb_lib::RcwsInfo & info) : void
++PrintRcwsPwmInfo(const lra::usb_lib::RcwsPwmInfo & info) : void
++PrintSelfInfo() : void
++PwmCmdSetRecursive(bool enable) : void
+-PwmCmdTask(std::string path) : void
++PwmCmdThreadClose() : void
++PwmCmdThreadRunning() : bool
+-RangeCheck(const lra::usb_lib::RcwsPwmInfo & info) : bool
+-RcwsPwmInfoToVec(const lra::usb_lib::RcwsPwmInfo & info) : std::vector<uint8_t>
+-ReadRcwsMsg() : std::vector<uint8_t>
++StartPwmCmdThread(std::string csv_path) : void
++UpdateAccFileHandle(FILE * handle) : void
++UpdateAccFileName(std::string name) : void
++UpdatePwmFileHandle(FILE * handle) : void
++UpdatePwmFileName(std::string name) : void
++UserCallExit() : void
+-WriteRcwsMsg<Args...>(LRA_USB_OUT_Cmd_t msg_type, Args &&... args) : void
+-_RegisterAllCommands() : void
+__
+-acc_file_ : FILE *
++command_vec_ : std::vector<RcwsCmdType>
+-current_acc_file_name_ : std::string
+-current_pwm_file_name_ : std::string
++data_path_ : std::string
+-mode_ : uint8_t
+-msg_generator_ : lra::usb_lib::RcwsMsgGenerator
+-parser_ : lra::usb_lib::RcwsParser
+-parser_thread_ : std::thread
++pipe_name_ : std::string
+-pwm_cmd_q_ : std::queue<RcwsPwmCmd>
+-pwm_cmd_thread_ : std::thread
+-pwm_cmd_thread_exit_ : bool
+-pwm_file_ : FILE *
+-rcws_info_ : lra::usb_lib::RcwsInfo
+-read_thread_exit_ : bool
+-recursive_flag_ : bool
+-registered_cmd_vec_ : std::vector<RcwsCmdType>
+-reset_stm32_flag_ : bool
+-serial_io_ : LibSerial::SerialPort
+}
+class "lra::usb_lib::PathDoesNotExistException" as C_0016300769837848856732
+class C_0016300769837848856732 {
++PathDoesNotExistException(const std::filesystem::path & p) : void
+__
+}
+class "lra::usb_lib::UIParser" as C_0011140674281237645383
+class C_0011140674281237645383 {
++UIParser(lra::usb_lib::UIParser::NextInputCallback callback) : void
+..
+-GetFloat(const std::string & output) : float
+-GetInt(const std::string & output) : int
++ListCmds() : void
++ListMap<Key,Value>(const std::map<Key,Value> & map) : void
++Parse(const std::string & input) : void
++RegisterRcws(lra::usb_lib::Rcws * rcws) : void
+__
+-next_input_callback_ : lra::usb_lib::UIParser::NextInputCallback
+-rcws_instance_ : lra::usb_lib::Rcws *
+}
+class "lra::usb_lib::NonBlockingInput" as C_0003742113103741535979
+class C_0003742113103741535979 {
++NonBlockingInput() : void
++~NonBlockingInput() : void
+..
++GetExitFlag() : bool
++InputAvailable() : bool
+-InputLoop() : void
++PopFirst() : std::string
++ProcessInput() : void
+__
+-exit_flag_ : std::atomic<bool>
+-input_queue_ : std::queue<std::string>
+-input_queue_cv_ : std::condition_variable
+-input_queue_mutex_ : std::mutex
+-input_thread_ : std::thread
++uiparser_ : lra::usb_lib::UIParser
+}
+class "lra::usb_lib::variant_cat_s<Ts...>" as C_0008820624158268489243
+class C_0008820624158268489243 {
+__
+}
+class "lra::util::Range" as C_0014310541044282649025
+class C_0014310541044282649025 {
++Range(float min, float max) : void
+..
++isWithinRange(float value) const : bool
+__
+-max_ : float
+-min_ : float
+}
+class "lra::util::BlockChecker" as C_0005261331645233366644
+class C_0005261331645233366644 {
++BlockChecker(int block_limit_time, std::function<void ()> callback) : void
+..
++end() : void
++start() : void
+__
+-callback_func : std::function<void ()>
+-limit : int
+-monitorThread : std::thread
+-shouldStop : bool
+}
+enum "LRA_USB_Mode_t" as C_0015070430714100730956
+enum C_0015070430714100730956 {
+LRA_USB_NONE_MODE
+LRA_USB_WAIT_FOR_INIT_MODE
+LRA_USB_CRTL_MODE
+LRA_USB_DATA_MODE
+LRA_USB_ALL_AVAILABLE_MODE
+}
+enum "LRA_Flag_t" as C_0008237669375525749758
+enum C_0008237669375525749758 {
+LRA_FLAG_UNSET
+LRA_FLAG_SET
+}
+enum "LRA_USB_Parse_Precheck_t" as C_0016887489266974931873
+enum C_0016887489266974931873 {
+PC_ALL_PASS
+PC_CMD_UNKNOWN
+PC_RX_UNSET
+PC_DATA_PTR_IS_NULL
+PC_DATA_LEN0
+PC_DATA_LEN_MISMATCH
+PC_DATA_LEN_OOB
+PC_EOP_NOT_FOUND
+PC_MSG_NOT_FROM_OUT
+}
+enum "LRA_USB_Parse_State_t" as C_0008816111083906233406
+enum C_0008816111083906233406 {
+PR_RX_UNSET
+PR_PRECHECK_FAIL
+PR_CURRENT_MODE_FORBIDDEN_FAIL
+PR_RETURN_MSG_TX_UNSET_FAIL
+PR_DATA_PARSE_CONTENT_FAIL
+PR_INTERNAL_OPERATION_FAIL
+}
+enum "LRA_USB_Cmd_Description_t" as C_0000892138379380980396
+enum C_0000892138379380980396 {
+CMD_IS_OUT
+CMD_DATA_LEN_CONST
+CMD_NR
+BASIC_CMD_MASK
+NO_OUT_CMD_MASK
+CMD_UNKNOWN_L
+CMD_SYS_INFO
+CMD_PARSE_ERR
+CMD_SWITCH_MODE
+CMD_INIT
+CMD_UPDATE_REG
+CMD_GET_REG
+CMD_RESET_DEVICE
+CMD_RUN_AUTOCALIBRATE
+CMD_UPDATE_PWM
+CMD_UPDATE_ACC
+CMD_UNKNOWN_H
+}
+enum "LRA_USB_IN_Cmd_t" as C_0014514143136634376787
+enum C_0014514143136634376787 {
+USB_IN_CMD_SYS_INFO
+USB_IN_CMD_PARSE_ERR
+USB_IN_CMD_SWITCH_MODE
+USB_IN_CMD_INIT
+USB_IN_CMD_UPDATE_REG
+USB_IN_CMD_GET_REG
+USB_IN_CMD_RESET_DEVICE
+USB_IN_CMD_RUN_AUTOCALIBRATE
+USB_IN_CMD_UPDATE_PWM
+USB_IN_CMD_UPDATE_ACC
+}
+enum "LRA_USB_OUT_Cmd_t" as C_0004279142166739185821
+enum C_0004279142166739185821 {
+USB_OUT_CMD_SYS_INFO
+USB_OUT_CMD_PARSE_ERR
+USB_OUT_CMD_SWITCH_MODE
+USB_OUT_CMD_INIT
+USB_OUT_CMD_UPDATE_REG
+USB_OUT_CMD_GET_REG
+USB_OUT_CMD_RESET_DEVICE
+USB_OUT_CMD_RUN_AUTOCALIBRATE
+USB_OUT_CMD_UPDATE_PWM
+USB_OUT_CMD_UPDATE_ACC
+}
+enum "LRA_Device_Index_t" as C_0006790288808603726341
+enum C_0006790288808603726341 {
+LRA_DEVICE_STM32
+LRA_DEVICE_MPU6500
+LRA_DEVICE_ADXL355
+LRA_DEVICE_DRV2605L_X
+LRA_DEVICE_DRV2605L_Y
+LRA_DEVICE_DRV2605L_Z
+LRA_DEVICE_ALL
+LRA_DEVICE_INVALID
+}
+class "(anonymous_5886485)" as C_0009009500740782782987
+class C_0009009500740782782987 {
+__
++data : float[3]
++t : float
+}
+C_0003858207505700472157 ..|> C_0008820624158268489243
+C_0004465371694676925409 ..|> C_0003858207505700472157
+C_0013995004851916376286 ..> C_0012202508834059990777
+C_0013995004851916376286 --> C_0010607425340147141647 : -prcws_
+C_0006117966071706626955 ..> C_0004279142166739185821
+C_0015773613878884244586 ..|> C_0016677692846105229533
+C_0015449411201283289251 ..> C_0015773613878884244586
+C_0015449411201283289251 ..|> C_0010091554601981940782
+C_0000705493911126138107 ..|> C_0016677692846105229533
+C_0007162988677578574206 ..> C_0000705493911126138107
+C_0007162988677578574206 ..|> C_0010091554601981940782
+C_0013803550029792824583 ..|> C_0016677692846105229533
+C_0001569929850764623214 ..> C_0013803550029792824583
+C_0001569929850764623214 ..|> C_0010091554601981940782
+C_0003123345807010051940 ..> C_0006790288808603726341
+C_0003123345807010051940 ..|> C_0016677692846105229533
+C_0003832572587521561431 ..> C_0003123345807010051940
+C_0003832572587521561431 ..|> C_0010091554601981940782
+C_0002671081740145556922 ..> C_0015070430714100730956
+C_0002671081740145556922 ..|> C_0016677692846105229533
+C_0001590531136156070645 ..> C_0002671081740145556922
+C_0001590531136156070645 ..|> C_0010091554601981940782
+C_0009824911775259007872 ..|> C_0016677692846105229533
+C_0000014120254699272268 ..> C_0009824911775259007872
+C_0000014120254699272268 ..|> C_0010091554601981940782
+C_0017343476662692487455 ..|> C_0016677692846105229533
+C_0003619412466671796319 ..> C_0017343476662692487455
+C_0003619412466671796319 ..|> C_0010091554601981940782
+C_0002200629205487705327 ..|> C_0016677692846105229533
+C_0010611589610574450831 ..> C_0002200629205487705327
+C_0010611589610574450831 ..|> C_0010091554601981940782
+C_0005407673863743930238 ..|> C_0016677692846105229533
+C_0017589846451525989059 ..> C_0005407673863743930238
+C_0017589846451525989059 ..|> C_0010091554601981940782
+C_0016146086392293076384 ..|> C_0016677692846105229533
+C_0013425014194362657281 ..> C_0016146086392293076384
+C_0013425014194362657281 ..|> C_0010091554601981940782
+C_0010607425340147141647 ..> C_0009979760369821962475
+C_0010607425340147141647 ..> C_0012202508834059990777
+C_0010607425340147141647 ..> C_0006790288808603726341
+C_0010607425340147141647 ..> C_0015070430714100730956
+C_0010607425340147141647 ..> C_0004279142166739185821
+C_0010607425340147141647 o-- C_0015449411201283289251 : +command_vec_
+C_0010607425340147141647 o-- C_0007162988677578574206 : +command_vec_
+C_0010607425340147141647 o-- C_0001569929850764623214 : +command_vec_
+C_0010607425340147141647 o-- C_0003832572587521561431 : +command_vec_
+C_0010607425340147141647 o-- C_0001590531136156070645 : +command_vec_
+C_0010607425340147141647 o-- C_0000014120254699272268 : +command_vec_
+C_0010607425340147141647 o-- C_0003619412466671796319 : +command_vec_
+C_0010607425340147141647 o-- C_0010611589610574450831 : +command_vec_
+C_0010607425340147141647 o-- C_0017589846451525989059 : +command_vec_
+C_0010607425340147141647 o-- C_0013425014194362657281 : +command_vec_
+C_0010607425340147141647 o-- C_0015449411201283289251 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0007162988677578574206 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0001569929850764623214 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0003832572587521561431 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0001590531136156070645 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0000014120254699272268 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0003619412466671796319 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0010611589610574450831 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0017589846451525989059 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0013425014194362657281 : -registered_cmd_vec_
+C_0010607425340147141647 o-- C_0006117966071706626955 : -msg_generator_
+C_0010607425340147141647 o-- C_0013995004851916376286 : -parser_
+C_0011140674281237645383 --> C_0010607425340147141647 : -rcws_instance_
+C_0003742113103741535979 o-- C_0011140674281237645383 : +uiparser_
+
+'Generated with clang-uml, version 0.6.1
+'LLVM version Ubuntu clang version 15.0.7
+@enduml

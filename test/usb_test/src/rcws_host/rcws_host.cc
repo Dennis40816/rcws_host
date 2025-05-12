@@ -158,19 +158,14 @@ int main(int argc, char* argv[]) {
     Log("{}\n", e.what());
   }
 
-  /* do fft  */
+  /* init non_blocking_input  */
 
   non_blocking_input.uiparser_.RegisterRcws(&rcws_instance);
   non_blocking_input.uiparser_.ListCmds();
 
-  /*  */
+  /* blocking forever loop */
 
-  while (!non_blocking_input.GetExitFlag()) {
-    non_blocking_input.ProcessInput();
-
-    // take a reset
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
+  non_blocking_input.RunLoop();
 
   return 0;
 }

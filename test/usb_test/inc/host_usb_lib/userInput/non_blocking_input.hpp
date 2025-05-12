@@ -40,6 +40,10 @@ class NonBlockingInput {
 
   ~NonBlockingInput() {
     exit_flag_.store(true);
+
+    // force std::cin get EOF just now (input thread)
+    ::close(STDIN_FILENO);
+
     if (input_thread_.joinable()) {
       input_thread_.join();
     }
@@ -59,12 +63,16 @@ class NonBlockingInput {
 
   bool InputAvailable() { return !input_queue_.empty(); }
 
-  void ProcessInput() {
-    while (!input_queue_.empty()) {
+  void RunLoop() {
+    while (true) {
+      // check should exit
+      if (exit_flag_.load()) {
+        break;
+      }
+
       std::string input = PopFirst();
 
-      // general parse
-      if (input == "exit" || input == "e" || input == "q" || input == "quit") {
+      if (input == "e" || input == "exit" || input == "q" || input == "quit") {
         uiparser_.Parse("exit");
         fmt::print(fg(fmt::terminal_color::red), "exit RCWS CLI\n");
         exit_flag_.store(true);
@@ -81,18 +89,18 @@ class NonBlockingInput {
 
  private:
   void InputLoop() {
-    while (!exit_flag_.load()) {
-      std::unique_lock<std::mutex> lock(input_queue_mutex_, std::defer_lock);
-      if (std::cin.peek() != EOF) {
-        lock.lock();
-        std::string input;
-        std::getline(std::cin, input);
-        input_queue_.push(input);
-        input_queue_cv_.notify_one();
-        lock.unlock();
+    std::string line;
+
+    while (std::getline(std::cin, line)) {
+      {
+        std::lock_guard<std::mutex> lock(input_queue_mutex_);
+        input_queue_.push(line);
       }
-      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      input_queue_cv_.notify_one();
+      if (exit_flag_.load()) break;
     }
+    // notify all waiting cv to avoid blocking forever
+    input_queue_cv_.notify_all();
   }
 
   std::thread input_thread_;
